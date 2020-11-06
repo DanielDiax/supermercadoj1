@@ -10,7 +10,8 @@ public $passwordBD="";
 public function __construct(){}
 
 //metodos
-public function conectarBD(){
+public function conectarBD()
+{
 
   
 
@@ -28,7 +29,8 @@ public function conectarBD(){
 
 }
 
-public function agregarDatos($consultaSQL){
+public function agregarDatos($consultaSQL)
+{
 
         //establecer una conexion
         $conexionBD=$this->conectarBD();
@@ -47,6 +49,48 @@ public function agregarDatos($consultaSQL){
     }
 
 }
+
+
+public function consultarDatos ($consultaSQL)
+{
+    //establecer una conexion
+    $conexionBD=$this->conectarBD();
+
+    //preparar la consulta
+    $consultarDatos=$conexionBD->prepare($consultaSQL);
+
+    //establecer el metodo de consulta
+    $consultarDatos->setFetchMode(PDO::FETCH_ASSOC);
+
+    //EjecutaR LA OPERAcion en la base de datos "BD"
+    $consultarDatos->execute();
+
+    //Retornar los Datos
+    return($consultarDatos->fetchAll());
+
+}
+
+
+public function eliminarDatos ($consultaSQL)
+{
+    //establecer una conexion
+    $conexionBD=$this->conectarBD();
+
+    //preparar la consulta
+    $eliminarDatos=$conexionBD->prepare($consultaSQL);
+
+    //ejecutar la consulta
+    $resultado=$eliminarDatos->execute();
+
+    if($resultado){
+        echo("Usuario eliminado");
+    }else{
+        echo("error");
+    }
+
+}
+
+
 
 
 }
